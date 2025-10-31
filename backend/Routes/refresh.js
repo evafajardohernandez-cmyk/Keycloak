@@ -29,7 +29,7 @@ router.get("/", async (req, res) => {
       httpOnly: true,
       secure: false, 
       sameSite: "Strict",
-      maxAge: 1800 * 1000,
+      maxAge: 300 * 1000,
     });
 
     return res.json({ accessToken: access_token, expiresIn: expires_in });

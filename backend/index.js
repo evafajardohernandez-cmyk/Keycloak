@@ -21,7 +21,7 @@ import refreshRoute from "./Routes/refresh.js";
   app.use(cors({
     origin: "http://localhost:5173", 
     credentials: true,
-  }));
+  }));  
 
   app.use("/refresh", refreshRoute); 
   app.use("/documents", authenticate, documents);

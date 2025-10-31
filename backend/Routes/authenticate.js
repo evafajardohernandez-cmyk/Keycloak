@@ -2,7 +2,7 @@ import jwtmod from "jsonwebtoken";
 
 export default async (req, res, next) => {
   try {
-    const bearerHeader = req.headers["Authorization"];
+    const bearerHeader = req.headers['authorization'];
     if (!bearerHeader) return res.sendStatus(401);
 
     const token = bearerHeader.split(" ")[1];
@@ -23,3 +23,7 @@ export default async (req, res, next) => {
     return res.sendStatus(403);
   }
 };
+
+
+
+    

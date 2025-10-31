@@ -1,5 +1,4 @@
 import Protected from "./components/Protected";
-import Public from "./components/Public";
 import useAuth from "./hooks/useAuth";
 
 function App() {
@@ -9,7 +8,7 @@ function App() {
 
   const { auth } = context;
 
-  return auth?.isLogin ? <Protected /> : <Public />;
+  return auth?.isLogin ? <Protected /> : <use />;
 }
 
 export default App;

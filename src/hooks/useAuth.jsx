@@ -3,7 +3,7 @@ import Keycloak from "keycloak-js";
 
 const AuthContext = createContext(null);
 
-export const AuthProvider = ({ children }) => {
+export const  AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(null);
   const isRun = useRef(false);
   const keycloak = useRef(null);
@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }) => {
     if (isRun.current) return;
     isRun.current = true;
 
+    const redirectUri = window.location.origin;
     const origin = window.location.origin;
     const silentCheckSsoRedirectUri = `${origin}/silent-check-sso.html`;
 
@@ -23,9 +24,11 @@ export const AuthProvider = ({ children }) => {
 
     keycloak.current
       .init({
-        onLoad: "check-sso",
-        checkLoginIframe: true,
-        silentCheckSsoRedirectUri,
+      onLoad: 'check-sso',
+      checkLoginIframe: true,
+      silentCheckSsoRedirectUri: silentCheckSsoRedirectUri,
+      enableLogging: false,
+      redirectUri: redirectUri,
       })
       .then((authenticated) => {
         if (authenticated) {
@@ -40,11 +43,7 @@ export const AuthProvider = ({ children }) => {
       })
       .catch((err) => console.error("Error inicializando Keycloak:", err));
   }, []);
-      const logout = () => {
-    keycloak.current.logout({
-      redirectUri: window.location.origin, 
-    });
-  };
+  
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
       {children}
@@ -57,3 +56,5 @@ export default useAuth;
 
 
 // https://keycloakgd.millenium.com.co/realms/ProductionKCAuthetication/protocol/openid-connect/auth?client_id=40805f1d-fff9-411e-baa8-fee23a320a26&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2F&state=bc4a50e6-28e6-4593-a6c9-15c9d77a1e3e&response_mode=fragment&response_type=code&scope=openid&nonce=fe0ec9dc-e5c5-4ec6-80e9-e9baebee3ece&code_challenge=4Zbs3IAPxVQXJHBTva8rbl2SEMNBtJEgWJtrLS-SHg0&code_challenge_method=S256
+
+
